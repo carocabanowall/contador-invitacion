@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -58,14 +57,16 @@
 
   <script>
     // Fecha objetivo: 12 diciembre 2026 19:00 Argentina (UTC-3)
-    const targetDate = new Date("2026-12-12T19:00:00-03:00").getTime();
+    // Usamos Date.UTC para evitar problemas de zona horaria
+    const targetDate = new Date(Date.UTC(2026, 11, 12, 22, 0, 0)); // 19:00 -03:00 es 22:00 UTC
 
     function updateCountdown() {
-      const now = new Date().getTime();
+      const now = new Date();
       const diff = targetDate - now;
 
       if (diff <= 0) {
         document.querySelector(".countdown").innerHTML = "¡Llegó el momento!";
+        clearInterval(intervalId); // Detenemos el intervalo
         return;
       }
 
@@ -80,9 +81,8 @@
       document.getElementById("seconds").textContent = seconds;
     }
 
-    setInterval(updateCountdown, 1000);
+    const intervalId = setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
-
 </body>
 </html>
